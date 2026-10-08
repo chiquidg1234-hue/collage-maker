@@ -20,19 +20,23 @@
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--ink);
     font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 32px 16px 48px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 16px 48px; }
   header { text-align: center; margin-bottom: 24px; }
   h1 { font-size: clamp(30px, 6vw, 44px); letter-spacing: -0.03em; margin: 0 0 6px; }
-  .sub { color: var(--muted); margin: 0 auto; max-width: 520px; }
+  .sub { color: var(--muted); margin: 0 auto; max-width: 540px; }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
     padding: 20px; margin-bottom: 16px; }
   h2 { font-size: 17px; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
   h2 small { color: var(--muted); font-weight: 500; font-size: 14px; }
   .n { width: 26px; height: 26px; border-radius: 50%; background: var(--soft); color: var(--accent);
     display: inline-grid; place-items: center; font-size: 13px; font-weight: 700; flex: none; }
+  .lbl { display: flex; justify-content: space-between; gap: 8px; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+  .lbl output, .lbl .hint { color: var(--muted); font-weight: 500; }
+  .hint { color: var(--muted); font-size: 13px; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px 24px; margin-bottom: 18px; }
 
   .btn { font: inherit; font-weight: 600; border: 1px solid var(--line); background: var(--card); color: var(--ink);
-    border-radius: 12px; padding: 10px 16px; cursor: pointer; transition: transform .08s, background .15s, opacity .15s; }
+    border-radius: 12px; padding: 9px 15px; cursor: pointer; transition: transform .08s, background .15s, opacity .15s; }
   .btn:hover { background: var(--soft); }
   .btn:active { transform: scale(.98); }
   .btn:disabled { opacity: .5; cursor: default; transform: none; }
@@ -41,49 +45,97 @@
   .btn.big { font-size: 18px; padding: 16px 32px; border-radius: 14px; }
   .btn.ghost { border-color: transparent; background: transparent; color: var(--muted); }
   .btn.ghost:hover { color: var(--ink); background: var(--soft); }
+  .btn.sm { padding: 6px 11px; font-size: 13px; border-radius: 10px; }
 
-  .templates { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
-  .tpl { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 10px;
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font: inherit; font-size: 13px; font-weight: 600; border: 1px solid var(--line); background: var(--card);
+    color: var(--ink); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+  .chip:hover { background: var(--soft); }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .chip small { font-weight: 500; opacity: .75; }
+
+  .stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-right: 10px; }
+  .stepper button { font: inherit; font-size: 20px; width: 40px; height: 38px; border: 0; background: var(--card); color: var(--ink); cursor: pointer; }
+  .stepper button:hover { background: var(--soft); }
+  .stepper output { min-width: 44px; text-align: center; font-weight: 700; font-size: 18px; }
+  .perrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+
+  .templates { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+  .tpl { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 8px; padding: 10px;
     border: 2px solid var(--line); border-radius: 14px; background: var(--card); cursor: pointer;
     font: inherit; font-size: 13px; font-weight: 600; color: var(--ink); }
-  .tpl canvas { width: 100%; aspect-ratio: 1; border-radius: 8px; display: block; }
+  .tpl .frame { width: 100%; aspect-ratio: 1; display: grid; place-items: center; }
+  .tpl canvas { max-width: 100%; max-height: 100%; border-radius: 6px; display: block; }
   .tpl[aria-pressed="true"] { border-color: var(--accent); background: var(--soft); }
 
-  .drop { border: 2px dashed var(--line); border-radius: 14px; padding: 32px 16px; text-align: center;
+  .drop { border: 2px dashed var(--line); border-radius: 14px; padding: 28px 16px; text-align: center;
     transition: border-color .15s, background .15s; cursor: pointer; }
   .drop.over { border-color: var(--accent); background: var(--soft); }
-  .drop .hint { color: var(--muted); margin: 12px 0 0; }
+  .drop .hint { margin: 12px 0 0; font-size: 14px; }
   .countrow { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   .count { font-weight: 700; font-size: 16px; }
   .count span { color: var(--muted); font-weight: 500; }
-  .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   .notice { background: var(--warn-bg); color: var(--warn); border-radius: 12px; padding: 10px 14px; margin: 12px 0 0; font-size: 14px; }
   .notice label { display: flex; gap: 8px; align-items: center; margin-top: 6px; cursor: pointer; font-weight: 600; }
   .msg { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 
-  .settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px 24px; }
-  .field > .lbl { display: flex; justify-content: space-between; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
-  .field output { color: var(--muted); font-weight: 500; }
+  .orderhead { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin: 18px 0 10px; }
+  .order { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; }
+  .ghead { grid-column: 1 / -1; font-size: 13px; font-weight: 700; color: var(--muted); margin-top: 6px;
+    display: flex; align-items: center; gap: 8px; }
+  .ghead::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .ghead.unused { color: var(--warn); }
+  .thumb { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: var(--line);
+    cursor: grab; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
+  .thumb canvas { width: 100%; height: 100%; display: block; pointer-events: none; }
+  .thumb .num { position: absolute; left: 4px; top: 4px; background: rgba(0,0,0,.6); color: #fff; font-size: 11px; font-weight: 700;
+    border-radius: 6px; padding: 1px 6px; pointer-events: none; }
+  .thumb .rm { position: absolute; right: 3px; top: 3px; width: 22px; height: 22px; border-radius: 50%; border: 0;
+    background: rgba(0,0,0,.6); color: #fff; font-size: 14px; line-height: 22px; padding: 0; cursor: pointer; }
+  .thumb.unused { opacity: .45; }
+  .thumb.dragging { opacity: .25; }
+  .drag-ghost { position: fixed; left: 0; top: 0; z-index: 50; pointer-events: none; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35); transform-origin: center; }
+  .drag-ghost canvas { display: block; width: 100%; height: 100%; }
+
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 12px; padding: 3px; gap: 3px; flex-wrap: wrap; }
+  .seg button { font: inherit; font-size: 14px; font-weight: 600; border: 0; background: transparent; color: var(--muted);
+    padding: 6px 14px; border-radius: 9px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
   input[type=range] { width: 100%; accent-color: var(--accent); }
+  input[type=text], select { font: inherit; width: 100%; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); }
   .swatches { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .sw { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--line); cursor: pointer; padding: 0; }
   .sw[aria-pressed="true"] { outline: 3px solid var(--accent); outline-offset: 2px; }
   .custom { position: relative; width: 32px; height: 32px; border-radius: 50%; overflow: hidden; border: 2px solid var(--line);
     background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red); }
   .custom input { position: absolute; inset: -8px; width: 48px; height: 48px; opacity: 0; cursor: pointer; }
-  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 12px; padding: 3px; gap: 3px; }
-  .seg button { font: inherit; font-weight: 600; border: 0; background: transparent; color: var(--muted);
-    padding: 7px 18px; border-radius: 9px; cursor: pointer; }
-  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  .textrow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
 
   .reshead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
   .reshead h2 { margin: 0; }
-  .results { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-  .col { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--bg); }
-  .col canvas { width: 100%; aspect-ratio: 1; display: block; }
-  .col .bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; background: var(--card); }
+  .exportbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .exportbar select { width: auto; padding: 7px 10px; }
+  .results { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .col { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--bg); display: flex; flex-direction: column; }
+  .col .stage { flex: 1; display: grid; place-items: center; padding: 10px; cursor: zoom-in; }
+  .col canvas { max-width: 100%; max-height: 340px; display: block; box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+  .col .bar { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 10px 12px; background: var(--card); flex-wrap: wrap; }
   .col .bar b { font-size: 14px; }
   .col .bar span { color: var(--muted); font-size: 13px; font-weight: 500; }
+
+  dialog { border: 0; padding: 0; border-radius: 18px; background: var(--card); color: var(--ink); width: min(1000px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px); box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+  dialog::backdrop { background: rgba(10,10,15,.6); }
+  .ed-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .ed-body { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(240px, 1fr); gap: 18px; padding: 18px; }
+  @media (max-width: 720px) { .ed-body { grid-template-columns: 1fr; } }
+  .ed-stage { background: var(--bg); border-radius: 12px; display: grid; place-items: center; padding: 10px; }
+  .ed-stage canvas { max-width: 100%; max-height: 62vh; display: block; touch-action: none; cursor: grab; }
+  .ed-side { display: flex; flex-direction: column; gap: 16px; }
+  .ed-photo[aria-disabled="true"] .needsel { opacity: .45; pointer-events: none; }
   footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 24px; }
 </style>
 </head>
@@ -91,20 +143,38 @@
 <main class="wrap">
   <header>
     <h1>Collage Maker</h1>
-    <p class="sub">Collages de 9 fotos en segundos. Todo se procesa en tu navegador: tus fotos no se suben a ningún servidor.</p>
+    <p class="sub">Collages con las fotos que quieras, en segundos. Todo se procesa en tu navegador: tus fotos no se suben a ningún servidor.</p>
   </header>
 
   <section class="card">
-    <h2><span class="n">1</span> Elige una plantilla</h2>
+    <h2><span class="n">1</span> Diseño</h2>
+    <div class="grid2">
+      <div>
+        <div class="lbl">Fotos por collage</div>
+        <div class="perrow">
+          <div class="stepper">
+            <button id="perMinus" type="button" aria-label="Menos fotos">−</button>
+            <output id="perOut">9</output>
+            <button id="perPlus" type="button" aria-label="Más fotos">+</button>
+          </div>
+          <div id="perChips" class="chips"></div>
+        </div>
+      </div>
+      <div>
+        <div class="lbl">Forma del collage</div>
+        <div id="ratios" class="chips"></div>
+      </div>
+    </div>
+    <div class="lbl">Plantilla <span class="hint" id="tplHint"></span></div>
     <div id="templates" class="templates"></div>
   </section>
 
   <section class="card">
-    <h2><span class="n">2</span> Añade tus fotos</h2>
+    <h2><span class="n">2</span> Fotos y orden</h2>
     <div id="drop" class="drop">
       <input id="file" type="file" accept="image/*" multiple hidden>
       <button id="pick" class="btn primary big" type="button">Seleccionar fotos</button>
-      <p class="hint">o arrastra aquí tus imágenes · de 1 a 100 fotos · se agrupan de 9 en 9 en el orden en que las eliges</p>
+      <p class="hint">o arrástralas aquí · de 1 a 100 fotos · se agrupan en el orden que elijas</p>
     </div>
     <div class="countrow">
       <div id="count" class="count">0 fotos seleccionadas</div>
@@ -116,28 +186,53 @@
     <p id="msg" class="msg" hidden></p>
     <div id="notice" class="notice" hidden>
       <div id="noticeText"></div>
-      <label><input id="incomplete" type="checkbox" checked> Crear también el último collage incompleto</label>
+      <label><input id="incomplete" type="checkbox" checked> Crear también el último collage con las fotos que sobran</label>
+    </div>
+    <div id="orderBox" hidden>
+      <div class="orderhead">
+        <span class="hint">Arrastra las fotos para cambiar el orden. En el móvil: mantén pulsado y arrastra.</span>
+        <div class="chips" id="sorts">
+          <button class="chip" type="button" data-sort="orig">Original</button>
+          <button class="chip" type="button" data-sort="name">Por nombre</button>
+          <button class="chip" type="button" data-sort="date">Por fecha</button>
+          <button class="chip" type="button" data-sort="rev">Invertir</button>
+          <button class="chip" type="button" data-sort="shuffle">Mezclar</button>
+        </div>
+      </div>
+      <div id="order" class="order"></div>
     </div>
   </section>
 
   <section class="card">
-    <h2><span class="n">3</span> Ajustes</h2>
-    <div class="settings">
-      <div class="field">
-        <div class="lbl">Espacio entre fotos <output id="gapOut">12 px</output></div>
-        <input id="gap" type="range" min="0" max="60" step="1" value="12">
+    <h2><span class="n">3</span> Estilo</h2>
+    <div class="grid2" style="margin-bottom:0">
+      <div>
+        <div class="lbl">Espacio entre fotos <output id="gapOut">12</output></div>
+        <input id="gap" type="range" min="0" max="80" step="1" value="12">
       </div>
-      <div class="field">
+      <div>
+        <div class="lbl">Esquinas redondeadas <output id="radOut">0</output></div>
+        <input id="radius" type="range" min="0" max="80" step="1" value="0">
+      </div>
+      <div>
         <div class="lbl">Fondo</div>
         <div id="swatches" class="swatches">
           <label class="custom" title="Color personalizado"><input id="bgCustom" type="color" value="#ffffff"></label>
         </div>
       </div>
-      <div class="field">
-        <div class="lbl">Formato de descarga</div>
-        <div class="seg" id="fmt">
-          <button type="button" data-fmt="jpeg" aria-pressed="true">JPG</button>
-          <button type="button" data-fmt="png" aria-pressed="false">PNG</button>
+      <div>
+        <div class="lbl">Texto <span class="hint">opcional · {n} = número del collage</span></div>
+        <input id="caption" type="text" maxlength="80" placeholder="Ej.: Verano 2026">
+        <div class="textrow">
+          <div class="seg" id="capPos">
+            <button type="button" data-v="top">Arriba</button>
+            <button type="button" data-v="bottom">Abajo</button>
+          </div>
+          <div class="seg" id="capFont">
+            <button type="button" data-v="modern">Moderna</button>
+            <button type="button" data-v="serif">Elegante</button>
+            <button type="button" data-v="script">Manuscrita</button>
+          </div>
         </div>
       </div>
     </div>
@@ -146,92 +241,247 @@
   <section id="resultsCard" class="card" hidden>
     <div class="reshead">
       <h2><span class="n">4</span> Tus collages <small id="resCount"></small></h2>
-      <button id="dlAll" class="btn primary" type="button">Descargar todos (.zip)</button>
+      <div class="exportbar">
+        <div class="seg" id="fmt">
+          <button type="button" data-v="jpeg">JPG</button>
+          <button type="button" data-v="png">PNG</button>
+        </div>
+        <select id="size" aria-label="Tamaño de descarga">
+          <option value="1080">1080 px</option>
+          <option value="2048">2048 px</option>
+          <option value="3000">3000 px</option>
+          <option value="4096">4096 px</option>
+        </select>
+        <button id="dlAll" class="btn primary" type="button">Descargar todos (.zip)</button>
+      </div>
     </div>
+    <p class="hint" style="margin:-4px 0 14px">Toca un collage para editarlo: encuadrar cada foto, hacer zoom, cambiar el orden o usar otra plantilla solo para ese collage.</p>
     <div id="results" class="results"></div>
   </section>
 
-  <footer>Sin registro · Sin servidores · 100 % gratis · Exporta a 2400 × 2400 px</footer>
+  <footer>Sin registro · Sin servidores · 100 % gratis</footer>
 </main>
+
+<dialog id="editor">
+  <div class="ed-head">
+    <b id="edTitle">Collage 1</b>
+    <div class="actions">
+      <button id="edPrev" class="btn sm" type="button" aria-label="Collage anterior">‹</button>
+      <button id="edNext" class="btn sm" type="button" aria-label="Collage siguiente">›</button>
+      <button id="edClose" class="btn sm" type="button">Listo</button>
+    </div>
+  </div>
+  <div class="ed-body">
+    <div class="ed-stage"><canvas id="edCanvas" width="10" height="10"></canvas></div>
+    <div class="ed-side">
+      <div>
+        <div class="lbl">Plantilla de este collage</div>
+        <div id="edLayouts" class="chips"></div>
+      </div>
+      <div id="edPhoto" class="ed-photo" aria-disabled="true">
+        <div class="lbl">Foto seleccionada <span class="hint" id="edSelName">ninguna</span></div>
+        <p class="hint" style="margin:0 0 10px">Toca una foto para seleccionarla y arrástrala para encuadrarla.</p>
+        <div class="needsel">
+          <div class="lbl">Zoom <output id="edZoomOut">100 %</output></div>
+          <input id="edZoom" type="range" min="1" max="3" step="0.01" value="1">
+          <div class="actions" style="margin-top:10px">
+            <button id="edBack" class="btn sm" type="button">◀ Antes</button>
+            <button id="edFwd" class="btn sm" type="button">Después ▶</button>
+            <button id="edCenter" class="btn sm" type="button">Centrar</button>
+            <button id="edRemove" class="btn sm ghost" type="button">Quitar</button>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="edDownload" class="btn primary" type="button">Descargar</button>
+        <button id="edShare" class="btn" type="button" hidden>Compartir</button>
+      </div>
+    </div>
+  </div>
+</dialog>
 
 <script>
 (() => {
   'use strict';
   const $ = (s) => document.querySelector(s);
-  const PER = 9, MAX_PHOTOS = 100;
-  const OUT = 2400;         // tamaño final de descarga (px)
-  const PREVIEW = 900;      // tamaño de la vista previa (px)
-  const THUMB_MAX = 700;    // lado máximo de las copias reducidas usadas en la vista previa
-  const REF = 1080;         // el espacio entre fotos se expresa en px sobre un lienzo de 1080
+  const MAX_PHOTOS = 100, MIN_PER = 1, MAX_PER = 25;
+  const PREVIEW = 800;      // lado largo de la vista previa (px)
+  const THUMB_MAX = 700;    // lado máximo de las copias reducidas de cada foto
+  const REF = 1080;         // espacio y esquinas se expresan en px sobre un lienzo de 1080
 
-  // ---------- Plantillas (coordenadas normalizadas 0..1, en orden de lectura) ----------
-  const units = (n, list) => list.map(([x, y, w, h]) => ({ x: x / n, y: y / n, w: w / n, h: h / n }));
-  const grid = (c, r) => { const o = []; for (let j = 0; j < r; j++) for (let i = 0; i < c; i++) o.push({ x: i / c, y: j / r, w: 1 / c, h: 1 / r }); return o; };
-  const rows = (counts) => { const o = [], rh = 1 / counts.length; counts.forEach((c, r) => { for (let i = 0; i < c; i++) o.push({ x: i / c, y: r * rh, w: 1 / c, h: rh }); }); return o; };
+  // ---------- Generadores de plantillas (coordenadas normalizadas 0..1, en orden de lectura) ----------
+  const distribute = (n, r) => { const b = Math.floor(n / r), rem = n % r; return Array.from({ length: r }, (_, i) => b + (i >= r - rem ? 1 : 0)); };
+  function bestRows(n, ar) {
+    let best = 1, bs = Infinity;
+    for (let r = 1; r <= n; r++) {
+      const counts = distribute(n, r);
+      let s = counts.reduce((a, k) => a + Math.abs(Math.log(ar * r / k)), 0) / r;
+      if (counts[0] !== counts[r - 1]) s += 0.12;
+      if (s < bs - 1e-9) { bs = s; best = r; }
+    }
+    return best;
+  }
+  const rowsCells = (counts) => { const o = [], rh = 1 / counts.length; counts.forEach((c, r) => { for (let i = 0; i < c; i++) o.push({ x: i / c, y: r * rh, w: 1 / c, h: rh }); }); return o; };
+  const gridCells = (n, ar) => rowsCells(distribute(n, bestRows(n, ar)));
+  const inRect = (cells, X, Y, W, H) => cells.map((c) => ({ x: X + c.x * W, y: Y + c.y * H, w: c.w * W, h: c.h * H }));
+  const units = (u, list) => list.map(([x, y, w, h]) => ({ x: x / u, y: y / u, w: w / u, h: h / u }));
 
-  const TEMPLATES = [
-    { id: 'grid', name: 'Cuadrícula 3×3', cells: grid(3, 3) },
-    { id: 'mosaic', name: 'Mosaico', cells: units(4, [[0,0,2,2],[2,0,2,1],[2,1,1,1],[3,1,1,1],[0,2,1,2],[1,2,1,1],[1,3,1,1],[2,2,1,2],[3,2,1,2]]) },
-    { id: 'focus', name: 'Foco central', cells: units(4, [[0,0,1,1],[1,0,2,1],[3,0,1,1],[0,1,1,2],[1,1,2,2],[3,1,1,2],[0,3,1,1],[1,3,2,1],[3,3,1,1]]) },
-    { id: 'rows', name: 'Filas 2·3·4', cells: rows([2, 3, 4]) },
-    { id: 'scrap', name: 'Scrapbook', scrap: true, cells: [
-      { x: .20, y: .19, r: -6 }, { x: .51, y: .17, r: 4 }, { x: .81, y: .20, r: -3 },
-      { x: .18, y: .50, r: 5 },  { x: .50, y: .51, r: -2 }, { x: .82, y: .49, r: 6 },
-      { x: .21, y: .81, r: -4 }, { x: .49, y: .83, r: 3 },  { x: .80, y: .80, r: -5 } ] },
-  ];
-
-  const BGS = [['#ffffff', 'Blanco'], ['#f4ede2', 'Crema'], ['#f7dde6', 'Rosa'], ['#dde8f5', 'Azul'], ['#1c1c1f', 'Negro']];
-
-  const state = { tpl: TEMPLATES[0], photos: [], gap: 12, bg: '#ffffff', fmt: 'jpeg', incomplete: true, busy: false };
-
-  // ---------- Dibujo ----------
-  function drawCover(ctx, img, x, y, w, h) {
-    const iw = img.width, ih = img.height;
-    const s = Math.max(w / iw, h / ih), sw = w / s, sh = h / s;
-    ctx.drawImage(img, (iw - sw) / 2, (ih - sh) / 2, sw, sh, x, y, w, h);
+  function featuredCells(n, ar) {
+    if (n === 1) return [{ x: 0, y: 0, w: 1, h: 1 }];
+    const m = n - 1, f = m <= 3 ? 0.62 : 0.58;
+    if (ar > 1.15) return [{ x: 0, y: 0, w: f, h: 1 }, ...inRect(gridCells(m, ar * (1 - f)), f, 0, 1 - f, 1)];
+    return [{ x: 0, y: 0, w: 1, h: f }, ...inRect(gridCells(m, ar / (1 - f)), 0, f, 1, 1 - f)];
+  }
+  function staggerCells(n, ar) {
+    const r = Math.max(2, bestRows(n, ar)), base = n / r, c = [];
+    for (let i = 0; i < r; i++) c.push(Math.max(1, Math.floor(base + i - (r - 1) / 2)));
+    let s = c.reduce((a, b) => a + b, 0), i = r - 1;
+    while (s < n) { c[i]++; s++; i = (i - 1 + r) % r; }
+    while (s > n) { const j = c.lastIndexOf(Math.max(...c)); c[j]--; s--; }
+    return rowsCells(c.filter((k) => k > 0));
+  }
+  function masonryCells(n, ar) {
+    const cols = Math.max(2, bestRows(n, 1 / ar)), counts = distribute(n, cols);
+    const Wt = [1.5, 1, 1.25, 0.8, 1.35, 0.9], off = cols === 2 ? 3 : 2;
+    const colsOut = counts.map((k, j) => {
+      const ws = Array.from({ length: k }, (_, i) => Wt[(i + j * off) % Wt.length]);
+      const tot = ws.reduce((a, b) => a + b, 0);
+      let y = 0;
+      return ws.map((w, k) => { const c = { x: j / cols, y, w: 1 / cols, h: w / tot, k }; y += w / tot; return c; });
+    });
+    return colsOut.flat().sort((a, b) => a.k - b.k || a.x - b.x); // fila a fila, de izquierda a derecha
+  }
+  function scrapCells(n, ar) {
+    const rot = [-6, 4, -3, 5, -2, -5, 3, -4, 6, 2, -6, 4, -2, 5, -4];
+    return gridCells(n, ar).map((c, i) => ({
+      scrap: true, cx: c.x + c.w / 2 + (((i * 37) % 7) - 3) / 3 * 0.035 * c.w, cy: c.y + c.h / 2 + (((i * 53) % 5) - 2) / 2 * 0.03 * c.h,
+      cw: c.w, ch: c.h, r: rot[i % rot.length] }));
   }
 
-  function render(ctx, S, tpl, imgs, o) {
+  const LAYOUTS = [
+    { id: 'grid', name: 'Cuadrícula', min: 1, cells: gridCells },
+    { id: 'featured', name: 'Destacada', min: 2, cells: featuredCells },
+    { id: 'stagger', name: 'Escalonada', min: 3, cells: staggerCells },
+    { id: 'masonry', name: 'Mosaico', min: 4, cells: masonryCells },
+    { id: 'mosaic9', name: 'Mosaico clásico', only: 9, cells: () => units(4, [[0,0,2,2],[2,0,2,1],[2,1,1,1],[3,1,1,1],[0,2,1,2],[1,2,1,1],[1,3,1,1],[2,2,1,2],[3,2,1,2]]) },
+    { id: 'focus9', name: 'Foco central', only: 9, cells: () => units(4, [[0,0,1,1],[1,0,2,1],[3,0,1,1],[0,1,1,2],[1,1,2,2],[3,1,1,2],[0,3,1,1],[1,3,2,1],[3,3,1,1]]) },
+    { id: 'pinwheel', name: 'Molinillo', only: 5, cells: () => units(4, [[0,0,3,1],[3,0,1,3],[0,1,1,3],[1,1,2,2],[1,3,3,1]]) },
+    { id: 'focus3', name: 'Trío', only: 3, cells: () => [{ x: 0, y: 0, w: .62, h: 1 }, { x: .62, y: 0, w: .38, h: .5 }, { x: .62, y: .5, w: .38, h: .5 }] },
+    { id: 'scrap', name: 'Scrapbook', min: 1, cells: scrapCells },
+  ];
+  const LMAP = Object.fromEntries(LAYOUTS.map((l) => [l.id, l]));
+  const available = (l, n) => (l.only ? l.only === n : n >= l.min);
+  const layoutsFor = (n) => LAYOUTS.filter((l) => available(l, n));
+  const resolveLayout = (id, n) => (LMAP[id] && available(LMAP[id], n) ? LMAP[id] : LMAP.grid);
+
+  const RATIOS = [['1:1', 'Cuadrado'], ['4:5', 'Instagram'], ['3:4', 'Vertical'], ['9:16', 'Historia'], ['4:3', 'Horizontal'], ['16:9', 'Panorámico']];
+  const ratioVal = (r) => { const [a, b] = r.split(':').map(Number); return a / b; };
+  const dims = (ratio, long) => { const ar = ratioVal(ratio); return ar >= 1 ? [long, Math.round(long / ar)] : [Math.round(long * ar), long]; };
+
+  const BGS = [['#ffffff', 'Blanco'], ['#f4ede2', 'Crema'], ['#f7dde6', 'Rosa'], ['#dde8f5', 'Azul'], ['#e3efe2', 'Verde'], ['#1c1c1f', 'Negro']];
+  const FONTS = {
+    modern: (px) => `600 ${px}px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`,
+    serif: (px) => `italic 500 ${px}px Georgia, "Times New Roman", serif`,
+    script: (px) => `${px}px "Segoe Script", "Bradley Hand", "Brush Script MT", "Comic Sans MS", cursive`,
+  };
+
+  // ---------- Estado ----------
+  const DEFAULTS = { per: 9, layout: 'grid', ratio: '1:1', gap: 12, radius: 0, bg: '#ffffff', fmt: 'jpeg', size: 2048,
+    caption: '', capPos: 'bottom', capFont: 'modern', incomplete: true };
+  const S = Object.assign({}, DEFAULTS);
+  try { Object.assign(S, JSON.parse(localStorage.getItem('collage-maker') || '{}')); } catch (e) { /* sin almacenamiento */ }
+  const save = () => { try { localStorage.setItem('collage-maker', JSON.stringify(S)); } catch (e) { /* sin almacenamiento */ } };
+
+  let photos = [];          // {id, seq, file, thumb, el, fx, fy, zoom}
+  let overrides = {};       // plantilla elegida para un collage concreto
+  let busy = false, seqCounter = 0;
+
+  // ---------- Dibujo ----------
+  function pathRound(ctx, x, y, w, h, r) {
+    r = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+  function drawPhoto(ctx, img, p, x, y, w, h, radius) {
+    const iw = img.width, ih = img.height;
+    const s = Math.max(w / iw, h / ih) * (p ? p.zoom : 1), sw = w / s, sh = h / s;
+    const fx = p ? p.fx : 0.5, fy = p ? p.fy : 0.5;
+    ctx.save();
+    if (radius > 0) { pathRound(ctx, x, y, w, h, radius); ctx.clip(); }
+    ctx.drawImage(img, (iw - sw) * fx, (ih - sh) * fy, sw, sh, x, y, w, h);
+    ctx.restore();
+  }
+  const luminance = (hex) => { const v = parseInt(hex.slice(1), 16); return (0.299 * (v >> 16) + 0.587 * ((v >> 8) & 255) + 0.114 * (v & 255)) / 255; };
+
+  // items: [{img, p}] (img null = hueco de ejemplo). Devuelve el rectángulo de cada foto.
+  function render(ctx, W, H, layout, items, o) {
     ctx.save();
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
     ctx.fillStyle = o.bg;
-    ctx.fillRect(0, 0, S, S);
-    const g = o.gap * S / REF;
+    ctx.fillRect(0, 0, W, H);
+    const unit = Math.min(W, H) / REF;
+    const g = o.gap * unit, rad = (o.radius || 0) * unit;
+    const band = o.caption ? Math.round(Math.min(W, H) * 0.11) : 0;
+    const A = { x: 0, y: o.capPos === 'top' ? band : 0, w: W, h: H - band };
+    const cells = layout.cells(items.length, A.w / A.h);
+    const rects = [];
 
-    if (tpl.scrap) {
-      const w = S * 0.28, b = w * 0.035 + g * 0.35, ph = w - 2 * b, h = b + ph + b * 3.2;
-      tpl.cells.forEach((c, i) => {
-        const img = imgs[i];
-        if (!img && !o.placeholder) return;
+    cells.forEach((c, i) => {
+      const it = items[i];
+      if (c.scrap) {
+        const cw = c.cw * A.w, ch = c.ch * A.h;
+        const fw = Math.min(cw, ch / 1.12) * 0.92;
+        const b = fw * 0.04 + g * 0.3, ph = fw - 2 * b, fh = b + ph + b * 3;
+        const cx = A.x + c.cx * A.w, cy = A.y + c.cy * A.h;
         ctx.save();
-        ctx.translate(c.x * S, c.y * S);
+        ctx.translate(cx, cy);
         ctx.rotate(c.r * Math.PI / 180);
-        ctx.shadowColor = 'rgba(0,0,0,.28)'; ctx.shadowBlur = S * 0.015; ctx.shadowOffsetY = S * 0.006;
+        ctx.shadowColor = 'rgba(0,0,0,.28)'; ctx.shadowBlur = fw * 0.06; ctx.shadowOffsetY = fw * 0.02;
         ctx.fillStyle = '#fff';
-        ctx.fillRect(-w / 2, -h / 2, w, h);
+        ctx.fillRect(-fw / 2, -fh / 2, fw, fh);
         ctx.shadowColor = 'transparent';
-        const px = -w / 2 + b, py = -h / 2 + b;
-        if (img) drawCover(ctx, img, px, py, ph, ph);
-        else { ctx.fillStyle = o.placeholder; ctx.fillRect(px, py, ph, ph); }
-        if (i % 2 === 0) { // cinta adhesiva
+        const px = -fw / 2 + b, py = -fh / 2 + b;
+        if (it && it.img) drawPhoto(ctx, it.img, it.p, px, py, ph, ph, 0);
+        else { ctx.fillStyle = o.placeholder || '#ccc'; ctx.fillRect(px, py, ph, ph); }
+        if (i % 2 === 0) {
           ctx.fillStyle = 'rgba(255,236,190,.8)';
           ctx.rotate((i % 4 ? 4 : -4) * Math.PI / 180);
-          ctx.fillRect(-w * 0.14, -h / 2 - w * 0.035, w * 0.28, w * 0.075);
+          ctx.fillRect(-fw * 0.14, -fh / 2 - fw * 0.035, fw * 0.28, fw * 0.075);
         }
         ctx.restore();
-      });
-    } else {
-      const A = S - g;
-      tpl.cells.forEach((c, i) => {
-        const x0 = Math.round(g + c.x * A), y0 = Math.round(g + c.y * A);
-        const x1 = Math.round((c.x + c.w) * A), y1 = Math.round((c.y + c.h) * A);
-        const img = imgs[i];
-        if (img) drawCover(ctx, img, x0, y0, x1 - x0, y1 - y0);
-        else if (o.placeholder) { ctx.fillStyle = o.placeholder; ctx.fillRect(x0, y0, x1 - x0, y1 - y0); }
-      });
+        rects.push({ x: cx - ph / 2, y: cy - fh / 2 + b, w: ph, h: ph });
+      } else {
+        const x0 = Math.round(A.x + g + c.x * (A.w - g)), y0 = Math.round(A.y + g + c.y * (A.h - g));
+        const x1 = Math.round(A.x + (c.x + c.w) * (A.w - g)), y1 = Math.round(A.y + (c.y + c.h) * (A.h - g));
+        const r = { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+        if (it && it.img) drawPhoto(ctx, it.img, it.p, r.x, r.y, r.w, r.h, rad);
+        else if (o.placeholder) {
+          ctx.fillStyle = o.placeholder;
+          if (rad > 0) { pathRound(ctx, r.x, r.y, r.w, r.h, rad); ctx.fill(); } else ctx.fillRect(r.x, r.y, r.w, r.h);
+        }
+        rects.push(r);
+      }
+    });
+
+    if (band) {
+      let px = Math.round(band * 0.46);
+      const text = o.caption;
+      ctx.font = FONTS[o.capFont](px);
+      const maxW = W * 0.9;
+      const tw = ctx.measureText(text).width;
+      if (tw > maxW) { px = Math.floor(px * maxW / tw); ctx.font = FONTS[o.capFont](px); }
+      ctx.fillStyle = luminance(o.bg) > 0.5 ? '#222226' : '#f4f4f6';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const cy = o.capPos === 'top' ? band / 2 + g * 0.5 : H - band / 2 - g * 0.5;
+      ctx.fillText(text, W / 2, cy);
     }
     ctx.restore();
+    return rects;
   }
 
   // ---------- Carga de imágenes ----------
@@ -267,15 +517,14 @@
     const img = await decode(file);
     try { return { file, thumb: await makeThumb(img) }; } finally { release(img); }
   }
-
   const isImage = (f) => f.type.startsWith('image/') || /\.(jpe?g|png|gif|webp|bmp|avif|heic|heif)$/i.test(f.name);
 
   async function addFiles(fileList, replace) {
-    if (state.busy) return;
+    if (busy) return;
     let files = [...fileList].filter(isImage);
     if (!files.length) { showMsg('No se encontraron imágenes en la selección.'); return; }
     if (replace) clearPhotos();
-    const room = MAX_PHOTOS - state.photos.length;
+    const room = MAX_PHOTOS - photos.length;
     const skipped = Math.max(0, files.length - room);
     files = files.slice(0, room);
     setBusy(true);
@@ -283,7 +532,10 @@
     const CONC = 4;
     for (let i = 0; i < files.length; i += CONC) {
       const res = await Promise.all(files.slice(i, i + CONC).map((f) => loadOne(f).catch(() => null)));
-      for (const r of res) { if (r) state.photos.push(r); else failed++; }
+      for (const r of res) {
+        if (!r) { failed++; continue; }
+        photos.push({ id: 'p' + (++seqCounter), seq: seqCounter, file: r.file, thumb: r.thumb, el: null, fx: 0.5, fy: 0.5, zoom: 1 });
+      }
       done += res.length;
       $('#count').innerHTML = `Cargando fotos… <span>${done} / ${files.length}</span>`;
     }
@@ -292,45 +544,219 @@
     if (skipped) notes.push(`Máximo ${MAX_PHOTOS} fotos: se han ignorado ${skipped}.`);
     if (failed) notes.push(`${failed} archivo(s) no se pudieron leer (formato no compatible con este navegador).`);
     showMsg(notes.join(' '));
-    refresh(true);
+    changed();
   }
-
   function clearPhotos() {
-    state.photos.forEach((p) => release(p.thumb));
-    state.photos = [];
+    photos.forEach((p) => release(p.thumb));
+    photos = [];
+    overrides = {};
   }
 
-  // ---------- Grupos y vista previa ----------
+  // ---------- Grupos ----------
   function groups() {
     const out = [];
-    for (let i = 0; i < state.photos.length; i += PER) {
-      const chunk = state.photos.slice(i, i + PER);
-      if (chunk.length < PER && !state.incomplete) break;
+    for (let i = 0; i < photos.length; i += S.per) {
+      const chunk = photos.slice(i, i + S.per);
+      if (chunk.length < S.per && !S.incomplete) break;
       out.push(chunk);
     }
     return out;
   }
-
-  const opts = () => ({ gap: state.gap, bg: state.bg });
-  const ext = () => (state.fmt === 'png' ? 'png' : 'jpg');
+  const layoutOf = (ci, n) => resolveLayout(overrides[ci] || S.layout, n);
+  const opts = (ci) => ({ gap: S.gap, radius: S.radius, bg: S.bg, capPos: S.capPos, capFont: S.capFont,
+    caption: S.caption.trim() ? S.caption.trim().replace(/\{n\}/g, String(ci + 1)) : '' });
+  const ext = () => (S.fmt === 'png' ? 'png' : 'jpg');
   const fileName = (i) => `collage-${String(i + 1).padStart(2, '0')}.${ext()}`;
+  const plural = (n, a, b) => (n === 1 ? a : b);
 
+  // ---------- Panel de diseño ----------
+  function renderDesign() {
+    $('#perOut').textContent = S.per;
+    $('#perChips').querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(+c.dataset.v === S.per)));
+    $('#ratios').querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.v === S.ratio)));
+    const box = $('#templates');
+    box.textContent = '';
+    const list = layoutsFor(S.per);
+    if (!list.some((l) => l.id === S.layout)) S.layout = 'grid';
+    const [tw, th] = dims(S.ratio, 220);
+    list.forEach((l) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'tpl'; b.dataset.id = l.id;
+      b.setAttribute('aria-pressed', String(l.id === S.layout));
+      const fr = document.createElement('div'); fr.className = 'frame';
+      const cv = document.createElement('canvas'); cv.width = tw; cv.height = th;
+      render(cv.getContext('2d'), tw, th, l, Array.from({ length: S.per }, () => null),
+        { gap: Math.min(40, 120 / Math.sqrt(S.per)), radius: S.radius ? 20 : 0, bg: '#eceef3', placeholder: '#aeb6c6' });
+      fr.append(cv);
+      b.append(fr, document.createTextNode(l.name));
+      b.addEventListener('click', () => { S.layout = l.id; overrides = {}; save(); renderDesign(); drawPreviews(); });
+      box.append(b);
+    });
+    $('#tplHint').textContent = `${S.per} ${plural(S.per, 'foto', 'fotos')} · ${RATIOS.find((r) => r[0] === S.ratio)[1]} ${S.ratio}`;
+  }
+  function setPer(n) {
+    n = Math.max(MIN_PER, Math.min(MAX_PER, n));
+    if (n === S.per) return;
+    S.per = n; overrides = {}; save();
+    renderDesign(); changed();
+  }
+  [2, 3, 4, 6, 9, 12].forEach((v) => {
+    const c = document.createElement('button');
+    c.type = 'button'; c.className = 'chip'; c.dataset.v = v; c.textContent = v;
+    c.addEventListener('click', () => setPer(v));
+    $('#perChips').append(c);
+  });
+  $('#perMinus').addEventListener('click', () => setPer(S.per - 1));
+  $('#perPlus').addEventListener('click', () => setPer(S.per + 1));
+  RATIOS.forEach(([r, name]) => {
+    const c = document.createElement('button');
+    c.type = 'button'; c.className = 'chip'; c.dataset.v = r;
+    c.innerHTML = `${name} <small>${r}</small>`;
+    c.addEventListener('click', () => { S.ratio = r; save(); renderDesign(); refresh(true); });
+    $('#ratios').append(c);
+  });
+
+  // ---------- Lista ordenable de fotos ----------
+  const orderEl = $('#order');
+  function makeThumbEl(p) {
+    const el = document.createElement('div');
+    el.className = 'thumb'; el.dataset.id = p.id;
+    const cv = document.createElement('canvas'); cv.width = cv.height = 160;
+    const ctx = cv.getContext('2d');
+    const t = p.thumb, s = Math.max(160 / t.width, 160 / t.height);
+    ctx.drawImage(t, (160 - t.width * s) / 2, (160 - t.height * s) / 2, t.width * s, t.height * s);
+    const num = document.createElement('span'); num.className = 'num';
+    const rm = document.createElement('button'); rm.className = 'rm'; rm.type = 'button'; rm.textContent = '×'; rm.title = 'Quitar foto';
+    rm.addEventListener('click', (e) => { e.stopPropagation(); removePhoto(p.id); });
+    el.title = p.file.name;
+    el.append(cv, num, rm);
+    return el;
+  }
+  function renderOrder() {
+    $('#orderBox').hidden = !photos.length;
+    orderEl.textContent = '';
+    const used = groups().reduce((a, g) => a + g.length, 0);
+    photos.forEach((p, i) => {
+      if (i % S.per === 0) {
+        const h = document.createElement('div');
+        const gi = i / S.per, cnt = Math.min(S.per, photos.length - i);
+        h.className = 'ghead' + (i >= used ? ' unused' : '');
+        h.textContent = i >= used ? `Sobran ${cnt} (no se usan)` : `Collage ${gi + 1} · ${cnt} ${plural(cnt, 'foto', 'fotos')}`;
+        orderEl.append(h);
+      }
+      if (!p.el) p.el = makeThumbEl(p);
+      p.el.querySelector('.num').textContent = i + 1;
+      p.el.classList.toggle('unused', i >= used);
+      orderEl.append(p.el);
+    });
+  }
+  function removePhoto(id) {
+    if (busy) return;
+    const i = photos.findIndex((p) => p.id === id);
+    if (i < 0) return;
+    release(photos[i].thumb);
+    photos.splice(i, 1);
+    changed();
+  }
+  $('#sorts').addEventListener('click', (e) => {
+    const b = e.target.closest('.chip'); if (!b || busy) return;
+    const by = b.dataset.sort;
+    if (by === 'orig') photos.sort((a, b2) => a.seq - b2.seq);
+    else if (by === 'name') photos.sort((a, b2) => a.file.name.localeCompare(b2.file.name, undefined, { numeric: true, sensitivity: 'base' }));
+    else if (by === 'date') photos.sort((a, b2) => a.file.lastModified - b2.file.lastModified || a.seq - b2.seq);
+    else if (by === 'rev') photos.reverse();
+    else if (by === 'shuffle') for (let i = photos.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [photos[i], photos[j]] = [photos[j], photos[i]]; }
+    changed();
+  });
+
+  // Arrastrar para reordenar (ratón: arrastrar; táctil: mantener pulsado y arrastrar)
+  let drag = null;
+  orderEl.addEventListener('pointerdown', (e) => {
+    const t = e.target.closest('.thumb');
+    if (!t || e.target.closest('.rm') || busy || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    drag = { el: t, pid: e.pointerId, sx: e.clientX, sy: e.clientY, x: e.clientX, y: e.clientY, touch: e.pointerType !== 'mouse', started: false };
+    if (drag.touch) drag.timer = setTimeout(startDrag, 260);
+  });
+  function startDrag() {
+    if (!drag || drag.started) return;
+    drag.started = true;
+    const r = drag.el.getBoundingClientRect();
+    const g = document.createElement('div');
+    g.className = 'drag-ghost';
+    g.style.width = r.width + 'px'; g.style.height = r.height + 'px';
+    const src = drag.el.querySelector('canvas'), cv = document.createElement('canvas');
+    cv.width = src.width; cv.height = src.height; cv.getContext('2d').drawImage(src, 0, 0);
+    g.append(cv);
+    document.body.append(g);
+    drag.ghost = g; drag.w = r.width; drag.h = r.height;
+    drag.el.classList.add('dragging');
+    if (navigator.vibrate) try { navigator.vibrate(12); } catch (err) { /* nada */ }
+    moveDrag();
+    autoScroll();
+  }
+  function moveDrag() {
+    const d = drag;
+    d.ghost.style.transform = `translate(${d.x - d.w / 2}px, ${d.y - d.h / 2}px) scale(1.08)`;
+    const hit = document.elementFromPoint(d.x, d.y);
+    const target = hit && hit.closest('.thumb');
+    if (!target || target === d.el || !orderEl.contains(target)) return;
+    const all = [...orderEl.querySelectorAll('.thumb')];
+    if (all.indexOf(d.el) < all.indexOf(target)) target.after(d.el); else target.before(d.el);
+  }
+  function autoScroll() {
+    if (!drag || !drag.started) return;
+    const edge = 70;
+    let dy = 0;
+    if (drag.y < edge) dy = -Math.ceil((edge - drag.y) / 5);
+    else if (drag.y > innerHeight - edge) dy = Math.ceil((drag.y - innerHeight + edge) / 5);
+    if (dy) { scrollBy(0, dy); moveDrag(); }
+    requestAnimationFrame(autoScroll);
+  }
+  window.addEventListener('pointermove', (e) => {
+    if (!drag || e.pointerId !== drag.pid) return;
+    drag.x = e.clientX; drag.y = e.clientY;
+    if (!drag.started) {
+      const dist = Math.hypot(drag.x - drag.sx, drag.y - drag.sy);
+      if (drag.touch) { if (dist > 10) { clearTimeout(drag.timer); drag = null; } return; }
+      if (dist < 5) return;
+      startDrag();
+    }
+    moveDrag();
+  });
+  function endDrag(e) {
+    if (!drag || (e && e.pointerId !== drag.pid)) return;
+    clearTimeout(drag.timer);
+    const d = drag; drag = null;
+    if (!d.started) return;
+    d.ghost.remove();
+    d.el.classList.remove('dragging');
+    const ids = [...orderEl.querySelectorAll('.thumb')].map((t) => t.dataset.id);
+    const byId = Object.fromEntries(photos.map((p) => [p.id, p]));
+    photos = ids.map((id) => byId[id]);
+    changed();
+  }
+  window.addEventListener('pointerup', endDrag);
+  window.addEventListener('pointercancel', endDrag);
+  document.addEventListener('touchmove', (e) => { if (drag && drag.started) e.preventDefault(); }, { passive: false });
+  orderEl.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  // ---------- Resultados ----------
   let cards = [];
-  function refresh(rebuild) {
-    const n = state.photos.length, rest = n % PER;
-    const full = Math.floor(n / PER);
-    const gs = groups();
+  function changed() { renderOrder(); refresh(true); if (edIndex >= 0) edRender(); }
 
+  function refresh(rebuild) {
+    const n = photos.length, rest = n % S.per, full = Math.floor(n / S.per);
+    const gs = groups();
     $('#count').innerHTML = n
-      ? `${n} foto${n === 1 ? '' : 's'} seleccionada${n === 1 ? '' : 's'} <span>· ${gs.length} collage${gs.length === 1 ? '' : 's'}</span>`
+      ? `${n} ${plural(n, 'foto seleccionada', 'fotos seleccionadas')} <span>· ${gs.length} ${plural(gs.length, 'collage', 'collages')}</span>`
       : '0 fotos seleccionadas';
     $('#add').hidden = $('#clear').hidden = !n;
     $('#pick').textContent = n ? 'Seleccionar otras fotos' : 'Seleccionar fotos';
 
-    if (n && rest) {
+    if (n && rest && S.per > 1) {
       $('#noticeText').textContent = full
-        ? `Tienes ${n} fotos: salen ${full} collage${full === 1 ? '' : 's'} completo${full === 1 ? '' : 's'} y sobran ${rest}. El último collage tendría ${rest} foto${rest === 1 ? '' : 's'} y ${PER - rest} hueco${PER - rest === 1 ? '' : 's'} vacío${PER - rest === 1 ? '' : 's'}.`
-        : `Tienes ${n} foto${n === 1 ? '' : 's'}: faltan ${PER - rest} para completar un collage de 9.`;
+        ? `Con ${S.per} fotos por collage salen ${full} ${plural(full, 'collage completo', 'collages completos')} y ${plural(rest, 'sobra', 'sobran')} ${rest}. El último collage se adaptará a ${rest} ${plural(rest, 'foto', 'fotos')}.`
+        : `Tienes ${n} ${plural(n, 'foto', 'fotos')}: faltan ${S.per - rest} para completar un collage de ${S.per}. Se creará uno adaptado a ${rest}.`;
       $('#notice').hidden = false;
     } else $('#notice').hidden = true;
 
@@ -343,16 +769,23 @@
       cards = gs.map((g, i) => {
         const el = document.createElement('div');
         el.className = 'col';
+        const st = document.createElement('div'); st.className = 'stage';
         const cv = document.createElement('canvas');
-        cv.width = cv.height = PREVIEW;
+        st.append(cv);
+        st.addEventListener('click', () => openEditor(i));
         const bar = document.createElement('div');
         bar.className = 'bar';
-        bar.innerHTML = `<b>Collage ${i + 1} <span>· ${g.length} foto${g.length === 1 ? '' : 's'}</span></b>`;
-        const btn = document.createElement('button');
-        btn.className = 'btn'; btn.type = 'button'; btn.textContent = 'Descargar';
-        btn.addEventListener('click', () => downloadOne(i, btn));
-        bar.append(btn);
-        el.append(cv, bar);
+        bar.innerHTML = `<b>Collage ${i + 1} <span>· ${g.length} ${plural(g.length, 'foto', 'fotos')}</span></b>`;
+        const acts = document.createElement('div'); acts.className = 'actions';
+        const ed = document.createElement('button');
+        ed.className = 'btn sm'; ed.type = 'button'; ed.textContent = 'Editar';
+        ed.addEventListener('click', () => openEditor(i));
+        const dl = document.createElement('button');
+        dl.className = 'btn sm'; dl.type = 'button'; dl.textContent = 'Descargar';
+        dl.addEventListener('click', () => downloadOne(i, dl));
+        acts.append(ed, dl);
+        bar.append(acts);
+        el.append(st, bar);
         box.append(el);
         return cv;
       });
@@ -365,25 +798,157 @@
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(() => {
       const gs = groups();
-      cards.forEach((cv, i) => render(cv.getContext('2d'), PREVIEW, state.tpl, gs[i].map((p) => p.thumb), opts()));
+      const [W, H] = dims(S.ratio, PREVIEW);
+      cards.forEach((cv, i) => {
+        if (!gs[i]) return;
+        if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+        render(cv.getContext('2d'), W, H, layoutOf(i, gs[i].length), gs[i].map((p) => ({ img: p.thumb, p })), opts(i));
+      });
     });
   }
+
+  // ---------- Editor de un collage ----------
+  const dlg = $('#editor'), edCv = $('#edCanvas');
+  let edIndex = -1, edSel = null, edRects = [], edPan = null;
+  function openEditor(i) {
+    if (busy) return;
+    edIndex = i; edSel = null;
+    if (!dlg.open) { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); }
+    edRender();
+  }
+  function closeEditor() { edIndex = -1; edSel = null; if (dlg.open) dlg.close(); }
+  function edGroup() { return groups()[edIndex] || null; }
+  function edRender() {
+    const gs = groups();
+    if (edIndex >= gs.length) edIndex = gs.length - 1;
+    if (edIndex < 0) { closeEditor(); return; }
+    const g = gs[edIndex];
+    if (edSel && !g.includes(edSel)) edSel = null;
+    $('#edTitle').textContent = `Collage ${edIndex + 1} de ${gs.length} · ${g.length} ${plural(g.length, 'foto', 'fotos')}`;
+    $('#edPrev').disabled = edIndex === 0;
+    $('#edNext').disabled = edIndex === gs.length - 1;
+    const [W, H] = dims(S.ratio, 1000);
+    if (edCv.width !== W || edCv.height !== H) { edCv.width = W; edCv.height = H; }
+    const ctx = edCv.getContext('2d');
+    const lay = layoutOf(edIndex, g.length);
+    edRects = render(ctx, W, H, lay, g.map((p) => ({ img: p.thumb, p })), opts(edIndex));
+    if (edSel) {
+      const r = edRects[g.indexOf(edSel)];
+      ctx.save();
+      ctx.strokeStyle = '#3d5afe'; ctx.lineWidth = 8; ctx.setLineDash([]);
+      ctx.strokeRect(r.x + 4, r.y + 4, r.w - 8, r.h - 8);
+      ctx.restore();
+    }
+    // plantillas para este collage
+    const box = $('#edLayouts');
+    box.textContent = '';
+    const cur = overrides[edIndex];
+    const mk = (label, id) => {
+      const c = document.createElement('button');
+      c.type = 'button'; c.className = 'chip'; c.textContent = label;
+      c.setAttribute('aria-pressed', String((id || null) === (cur || null)));
+      c.addEventListener('click', () => { if (id) overrides[edIndex] = id; else delete overrides[edIndex]; edRender(); drawPreviews(); });
+      box.append(c);
+    };
+    mk(`General (${resolveLayout(S.layout, g.length).name})`, null);
+    layoutsFor(g.length).forEach((l) => mk(l.name, l.id));
+    // foto seleccionada
+    $('#edPhoto').setAttribute('aria-disabled', String(!edSel));
+    $('#edSelName').textContent = edSel ? `#${photos.indexOf(edSel) + 1} · ${edSel.file.name}` : 'ninguna';
+    $('#edZoom').value = edSel ? edSel.zoom : 1;
+    $('#edZoomOut').textContent = `${Math.round((edSel ? edSel.zoom : 1) * 100)} %`;
+    if (edSel) {
+      const idx = photos.indexOf(edSel);
+      $('#edBack').disabled = idx === 0;
+      $('#edFwd').disabled = idx === photos.length - 1;
+    }
+  }
+  function canvasPoint(e) {
+    const r = edCv.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * edCv.width / r.width, y: (e.clientY - r.top) * edCv.height / r.height };
+  }
+  edCv.addEventListener('pointerdown', (e) => {
+    const g = edGroup(); if (!g) return;
+    const pt = canvasPoint(e);
+    const i = edRects.findIndex((r) => pt.x >= r.x && pt.x <= r.x + r.w && pt.y >= r.y && pt.y <= r.y + r.h);
+    if (i < 0) { edSel = null; edRender(); return; }
+    edSel = g[i];
+    edPan = { pid: e.pointerId, last: pt, rect: edRects[i] };
+    try { edCv.setPointerCapture(e.pointerId); } catch (err) { /* nada */ }
+    edRender();
+  });
+  edCv.addEventListener('pointermove', (e) => {
+    if (!edPan || e.pointerId !== edPan.pid || !edSel) return;
+    const pt = canvasPoint(e);
+    const dx = pt.x - edPan.last.x, dy = pt.y - edPan.last.y;
+    edPan.last = pt;
+    const t = edSel.thumb, r = edPan.rect;
+    const s = Math.max(r.w / t.width, r.h / t.height) * edSel.zoom;
+    const freeX = t.width - r.w / s, freeY = t.height - r.h / s;
+    if (freeX > 0.5) edSel.fx = Math.min(1, Math.max(0, edSel.fx - (dx / s) / freeX));
+    if (freeY > 0.5) edSel.fy = Math.min(1, Math.max(0, edSel.fy - (dy / s) / freeY));
+    edRender();
+  });
+  const endPan = (e) => { if (edPan && e.pointerId === edPan.pid) { edPan = null; drawPreviews(); } };
+  edCv.addEventListener('pointerup', endPan);
+  edCv.addEventListener('pointercancel', endPan);
+  $('#edZoom').addEventListener('input', (e) => { if (!edSel) return; edSel.zoom = +e.target.value; edRender(); drawPreviews(); });
+  $('#edCenter').addEventListener('click', () => { if (!edSel) return; edSel.fx = edSel.fy = 0.5; edSel.zoom = 1; edRender(); drawPreviews(); });
+  function movePhoto(delta) {
+    if (!edSel) return;
+    const i = photos.indexOf(edSel), j = i + delta;
+    if (j < 0 || j >= photos.length) return;
+    [photos[i], photos[j]] = [photos[j], photos[i]];
+    const sel = edSel;
+    changed();
+    const gi = Math.floor(photos.indexOf(sel) / S.per);
+    if (gi !== edIndex && gi < groups().length) edIndex = gi;
+    edSel = sel;
+    edRender();
+  }
+  $('#edBack').addEventListener('click', () => movePhoto(-1));
+  $('#edFwd').addEventListener('click', () => movePhoto(1));
+  $('#edRemove').addEventListener('click', () => { if (edSel) { const id = edSel.id; edSel = null; removePhoto(id); } });
+  $('#edPrev').addEventListener('click', () => { if (edIndex > 0) { edIndex--; edSel = null; edRender(); } });
+  $('#edNext').addEventListener('click', () => { if (edIndex < groups().length - 1) { edIndex++; edSel = null; edRender(); } });
+  $('#edClose').addEventListener('click', closeEditor);
+  dlg.addEventListener('close', () => { edIndex = -1; edSel = null; });
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) closeEditor(); });
+  $('#edDownload').addEventListener('click', (e) => downloadOne(edIndex, e.currentTarget));
+
+  const canShareFiles = (() => {
+    try { return !!(navigator.canShare && navigator.canShare({ files: [new File(['x'], 'a.jpg', { type: 'image/jpeg' })] })); } catch (e) { return false; }
+  })();
+  $('#edShare').hidden = !canShareFiles;
+  $('#edShare').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    if (busy) return;
+    setBusy(true);
+    const label = btn.textContent; btn.textContent = 'Preparando…';
+    try {
+      const blob = await buildFull(edIndex);
+      const file = new File([blob], fileName(edIndex), { type: blob.type });
+      await navigator.share({ files: [file] });
+    } catch (err) { /* compartir cancelado */ }
+    finally { btn.textContent = label; setBusy(false); }
+  });
 
   // ---------- Exportación ----------
   async function buildFull(i) {
     const chunk = groups()[i];
     const decoded = [];
     try {
-      const imgs = [];
+      const items = [];
       for (const p of chunk) {
         let img;
         try { img = await decode(p.file); decoded.push(img); } catch (e) { img = p.thumb; }
-        imgs.push(img);
+        items.push({ img, p });
       }
+      const [W, H] = dims(S.ratio, S.size);
       const c = document.createElement('canvas');
-      c.width = c.height = OUT;
-      render(c.getContext('2d'), OUT, state.tpl, imgs, opts());
-      const mime = state.fmt === 'png' ? 'image/png' : 'image/jpeg';
+      c.width = W; c.height = H;
+      render(c.getContext('2d'), W, H, layoutOf(i, chunk.length), items, opts(i));
+      const mime = S.fmt === 'png' ? 'image/png' : 'image/jpeg';
       const blob = await new Promise((res, rej) => c.toBlob((b) => (b ? res(b) : rej(new Error('toBlob'))), mime, 0.92));
       c.width = c.height = 0;
       return blob;
@@ -391,7 +956,6 @@
       decoded.forEach(release);
     }
   }
-
   function saveBlob(blob, name) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -399,9 +963,8 @@
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 10000);
   }
-
   async function downloadOne(i, btn) {
-    if (state.busy) return;
+    if (busy || i < 0) return;
     setBusy(true);
     const label = btn.textContent;
     btn.textContent = 'Generando…';
@@ -409,9 +972,8 @@
     catch (e) { showMsg('No se pudo generar el collage. Prueba de nuevo.'); }
     finally { btn.textContent = label; setBusy(false); }
   }
-
   async function downloadAll() {
-    if (state.busy) return;
+    if (busy) return;
     const n = groups().length;
     if (!n) return;
     const btn = $('#dlAll'), label = btn.textContent;
@@ -461,87 +1023,92 @@
     return new Blob([...parts, ...central, end], { type: 'application/zip' });
   }
 
-  // ---------- UI ----------
+  // ---------- Controles generales ----------
   function setBusy(b) {
-    state.busy = b;
-    document.querySelectorAll('#pick, #add, #clear, #dlAll, .col .btn').forEach((el) => (el.disabled = b));
+    busy = b;
+    document.querySelectorAll('#pick, #add, #clear, #dlAll, .col .btn, #edDownload, #edShare').forEach((el) => (el.disabled = b));
   }
   function showMsg(t) { const m = $('#msg'); m.textContent = t; m.hidden = !t; }
+  function bindSeg(sel, key, onChange) {
+    const box = $(sel);
+    const sync = () => box.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.v === S[key])));
+    box.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; S[key] = b.dataset.v; save(); sync(); if (onChange) onChange(); });
+    sync();
+  }
+  bindSeg('#fmt', 'fmt');
+  bindSeg('#capPos', 'capPos', () => { drawPreviews(); if (edIndex >= 0) edRender(); });
+  bindSeg('#capFont', 'capFont', () => { drawPreviews(); if (edIndex >= 0) edRender(); });
 
-  // Selector de plantillas con miniaturas dibujadas por el mismo motor
-  const tplBox = $('#templates');
-  TEMPLATES.forEach((t) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'tpl';
-    b.setAttribute('aria-pressed', String(t === state.tpl));
-    const cv = document.createElement('canvas');
-    cv.width = cv.height = 200;
-    render(cv.getContext('2d'), 200, t, [], { gap: 40, bg: '#eceef3', placeholder: '#aeb6c6' });
-    b.append(cv, document.createTextNode(t.name));
-    b.addEventListener('click', () => {
-      state.tpl = t;
-      tplBox.querySelectorAll('.tpl').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-      drawPreviews();
-    });
-    tplBox.append(b);
-  });
+  const sizeSel = $('#size');
+  sizeSel.value = String(S.size);
+  if (!sizeSel.value) { S.size = 2048; sizeSel.value = '2048'; }
+  sizeSel.addEventListener('change', () => { S.size = +sizeSel.value; save(); });
 
-  // Fondo
+  const cap = $('#caption');
+  cap.value = S.caption;
+  cap.addEventListener('input', () => { S.caption = cap.value; save(); drawPreviews(); });
+
+  function bindRange(sel, out, key, onInput) {
+    const el = $(sel);
+    el.value = S[key]; $(out).textContent = S[key];
+    el.addEventListener('input', () => { S[key] = +el.value; $(out).textContent = S[key]; save(); drawPreviews(); if (onInput) onInput(); });
+  }
+  bindRange('#gap', '#gapOut', 'gap');
+  bindRange('#radius', '#radOut', 'radius', () => renderDesignSoon());
+  let rdT = 0;
+  function renderDesignSoon() { clearTimeout(rdT); rdT = setTimeout(renderDesign, 150); }
+
   const swBox = $('#swatches'), custom = $('#bgCustom');
   function setBg(color, fromCustom) {
-    state.bg = color;
+    S.bg = color; save();
     swBox.querySelectorAll('.sw').forEach((s) => s.setAttribute('aria-pressed', String(!fromCustom && s.dataset.c === color)));
     if (!fromCustom) custom.value = color;
     drawPreviews();
+    if (edIndex >= 0) edRender();
   }
   BGS.forEach(([c, name]) => {
     const s = document.createElement('button');
     s.type = 'button'; s.className = 'sw'; s.dataset.c = c; s.title = name; s.style.background = c;
-    s.setAttribute('aria-pressed', String(c === state.bg));
+    s.setAttribute('aria-pressed', String(c === S.bg));
     s.addEventListener('click', () => setBg(c, false));
     swBox.insertBefore(s, swBox.lastElementChild);
   });
+  custom.value = /^#[0-9a-f]{6}$/i.test(S.bg) ? S.bg : '#ffffff';
   custom.addEventListener('input', () => setBg(custom.value, true));
 
-  // Espacio
-  $('#gap').addEventListener('input', (e) => {
-    state.gap = +e.target.value;
-    $('#gapOut').textContent = `${state.gap} px`;
-    drawPreviews();
-  });
-
-  // Formato
-  $('#fmt').addEventListener('click', (e) => {
-    const b = e.target.closest('button'); if (!b) return;
-    state.fmt = b.dataset.fmt;
-    $('#fmt').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-  });
-
-  $('#incomplete').addEventListener('change', (e) => { state.incomplete = e.target.checked; refresh(true); });
+  const incl = $('#incomplete');
+  incl.checked = S.incomplete;
+  incl.addEventListener('change', () => { S.incomplete = incl.checked; save(); changed(); });
 
   // Archivos
   const input = $('#file');
   let replaceMode = true;
-  const openPicker = (replace) => { if (state.busy) return; replaceMode = replace; input.click(); };
+  const openPicker = (replace) => { if (busy) return; replaceMode = replace; input.click(); };
   $('#pick').addEventListener('click', (e) => { e.stopPropagation(); openPicker(true); });
   $('#add').addEventListener('click', () => openPicker(false));
-  $('#drop').addEventListener('click', () => openPicker(!state.photos.length));
+  $('#drop').addEventListener('click', () => openPicker(!photos.length));
   input.addEventListener('change', () => { if (input.files.length) addFiles(input.files, replaceMode); input.value = ''; });
-  $('#clear').addEventListener('click', () => { clearPhotos(); showMsg(''); refresh(true); });
+  $('#clear').addEventListener('click', () => { if (busy) return; clearPhotos(); showMsg(''); changed(); });
   $('#dlAll').addEventListener('click', downloadAll);
 
-  // Arrastrar y soltar (en cualquier parte de la página)
+  // Soltar archivos desde el ordenador (no confundir con reordenar miniaturas)
   const drop = $('#drop');
   let depth = 0;
-  window.addEventListener('dragenter', (e) => { e.preventDefault(); depth++; drop.classList.add('over'); });
-  window.addEventListener('dragleave', () => { if (--depth <= 0) { depth = 0; drop.classList.remove('over'); } });
-  window.addEventListener('dragover', (e) => e.preventDefault());
+  const hasFiles = (e) => e.dataTransfer && [...e.dataTransfer.types].includes('Files');
+  window.addEventListener('dragenter', (e) => { if (!hasFiles(e)) return; e.preventDefault(); depth++; drop.classList.add('over'); });
+  window.addEventListener('dragleave', (e) => { if (!hasFiles(e)) return; if (--depth <= 0) { depth = 0; drop.classList.remove('over'); } });
+  window.addEventListener('dragover', (e) => { if (hasFiles(e)) e.preventDefault(); });
   window.addEventListener('drop', (e) => {
+    if (!hasFiles(e)) return;
     e.preventDefault(); depth = 0; drop.classList.remove('over');
-    if (e.dataTransfer && e.dataTransfer.files.length) addFiles(e.dataTransfer.files, false);
+    if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files, false);
   });
+  orderEl.addEventListener('dragstart', (e) => e.preventDefault());
 
-  refresh(true);
+  S.per = Math.max(MIN_PER, Math.min(MAX_PER, +S.per || 9));
+  if (!RATIOS.some((r) => r[0] === S.ratio)) S.ratio = '1:1';
+  renderDesign();
+  changed();
 })();
 </script>
 </body>
